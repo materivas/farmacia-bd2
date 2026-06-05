@@ -4,6 +4,7 @@ package org.bd2;
 import org.bd2.data.DataLoader;
 import org.bd2.model.Sistema;
 import org.bd2.service.JsonService;
+import org.bd2.service.MongoService;
 
 public class Main {
 
@@ -18,6 +19,15 @@ public class Main {
 
         System.out.println("Generando JSON...");
         JsonService.generarJsonVentas(sistema.getVentas());
+
+        System.out.println("Cargando ventas en MongoDB...");
+        try {
+            MongoService.insertarVentas(sistema.getVentas(), true);
+            MongoService.ejecutarConsultasEntrega();
+        } catch (RuntimeException e) {
+            System.out.println("No se pudo cargar MongoDB. Verifica que MongoDB este ejecutandose en mongodb://localhost:27017");
+            System.out.println("Detalle: " + e.getMessage());
+        }
 
         System.out.println("Listo!");
     }

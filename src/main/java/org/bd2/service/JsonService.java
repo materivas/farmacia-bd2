@@ -19,7 +19,7 @@ public class JsonService {
     private static final String OUTPUT_PATH = "src/main/resources/output.json";
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    private static Gson buildGson() {
+    public static Gson buildGson() {
         return new GsonBuilder()
                 .setPrettyPrinting()
                 .registerTypeAdapter(LocalDateTime.class, new TypeAdapter<LocalDateTime>() {
@@ -52,6 +52,10 @@ public class JsonService {
 
     public static String toJson(Sistema sistema) {
         return buildGson().toJson(sistema);
+    }
+
+    public static String toJson(Venta venta) {
+        return buildGson().toJson(venta);
     }
     
     public static void generarJsonVentas(List<Venta> ventas) {
